@@ -150,34 +150,34 @@ const Classes = () => {
             <p className="mt-4 text-gray-600">Loading classes...</p>
           </div>
         ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6 lg:gap-8">
           {classes.map((classItem, index) => (
             <div
               key={index}
-              className="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-shadow duration-300"
+              className="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
             >
               <div className="aspect-w-16 aspect-h-9">
                 <img
                   src={classItem.image_url || '/IMG-20250907-WA0011.jpg'}
                   alt={classItem.title}
-                  className="w-full h-48 object-cover"
+                  className="w-full h-48 sm:h-56 object-cover transition-transform duration-300 hover:scale-105"
                 />
               </div>
-              <div className="p-6">
+              <div className="p-6 lg:p-8">
                 <div className="flex justify-between items-start mb-4">
-                  <h3 className="text-2xl font-light text-gray-900">
+                  <h3 className="text-xl lg:text-2xl font-light text-gray-900">
                     {classItem.title}
                   </h3>
-                  <span className="text-2xl font-light text-blue-600">
+                  <span className="text-xl lg:text-2xl font-medium text-blue-600 flex-shrink-0 ml-4">
                     ${classItem.price}
                   </span>
                 </div>
                 
-                <p className="text-gray-600 mb-6 leading-relaxed">
+                <p className="text-gray-600 mb-6 leading-relaxed text-sm lg:text-base">
                   {classItem.description}
                 </p>
                 
-                <div className="flex justify-between items-center text-sm text-gray-500">
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-0 text-sm text-gray-500 mb-6">
                   <div className="flex items-center">
                     <Clock className="w-4 h-4 mr-2" />
                     {classItem.duration}
@@ -190,7 +190,7 @@ const Classes = () => {
                 
                 <button 
                   onClick={() => handleBookClass(classItem)}
-                  className="w-full mt-6 bg-gray-900 text-white py-3 rounded-full hover:bg-gray-800 transition-colors duration-200 font-light"
+                  className="w-full bg-blue-600 text-white py-3 lg:py-4 rounded-full hover:bg-blue-700 transition-all duration-200 font-medium transform hover:scale-105 hover:shadow-lg"
                 >
                   Book Class
                 </button>
@@ -200,22 +200,33 @@ const Classes = () => {
         </div>
         )}
 
-        <div className="mt-16 text-center">
-          <div className="bg-gray-50 rounded-2xl p-8">
-            <h3 className="text-2xl font-light text-gray-900 mb-4">
+        <div className="mt-16 lg:mt-20 text-center">
+          <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-8 lg:p-12 shadow-lg">
+            <h3 className="text-2xl lg:text-3xl font-light text-gray-900 mb-6">
               Private Sessions
             </h3>
-            <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-              Experience personalized yoga instruction tailored to your specific needs, 
-              goals, and schedule. Perfect for beginners, injury recovery, or deepening your practice.
+            <p className="text-gray-600 mb-8 max-w-3xl mx-auto text-base lg:text-lg leading-relaxed">
+              Experience personalized yoga instruction tailored to your unique needs, goals, and schedule. 
+              Perfect for beginners, injury recovery, or those looking to deepen their practice in a supportive one-on-one environment.
             </p>
-            <div className="flex items-center justify-center text-gray-500 mb-6">
+            <div className="flex items-center justify-center text-gray-600 mb-8 text-sm lg:text-base">
               <MapPin className="w-5 h-5 mr-2" />
-              <span>Available in-studio or at your location in Madison</span>
+              <span>Available in-studio or at your location throughout Madison</span>
             </div>
-            <button className="bg-blue-600 text-white px-8 py-3 rounded-full hover:bg-blue-700 transition-colors duration-200 font-light">
-              Schedule Consultation
-            </button>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <a 
+                href="#contact" 
+                className="bg-blue-600 text-white px-8 py-4 rounded-full hover:bg-blue-700 transition-all duration-200 font-medium transform hover:scale-105 hover:shadow-lg min-w-[200px]"
+              >
+                Schedule Consultation
+              </a>
+              <a 
+                href="tel:+16087209861" 
+                className="border-2 border-blue-600 text-blue-600 px-8 py-4 rounded-full hover:bg-blue-600 hover:text-white transition-all duration-200 font-medium transform hover:scale-105 hover:shadow-lg min-w-[200px]"
+              >
+                Call (608) 720-9861
+              </a>
+            </div>
           </div>
         </div>
       </div>

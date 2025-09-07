@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Calendar, Clock, User } from 'lucide-react';
+import { X, Clock, User, Phone } from 'lucide-react';
 import { bookingsApi, type ClassBooking, type YogaClass } from '../lib/supabase';
 
 interface BookingModalProps {
@@ -45,24 +45,24 @@ const BookingModal = ({ isOpen, onClose, yogaClass, onBookingComplete }: Booking
   if (!isOpen || !yogaClass) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
-        <div className="p-6">
+    <div className="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center p-4">
+      <div className="bg-white rounded-2xl max-w-lg w-full max-h-[95vh] overflow-y-auto shadow-2xl">
+        <div className="p-6 lg:p-8">
           {/* Header */}
           <div className="flex justify-between items-center mb-6">
-            <h3 className="text-2xl font-light text-gray-900">
+            <h3 className="text-xl lg:text-2xl font-light text-gray-900 pr-4">
               Book {yogaClass.title}
             </h3>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-600 transition-colors"
+              className="text-gray-400 hover:text-gray-600 transition-colors p-1"
             >
               <X size={24} />
             </button>
           </div>
 
           {/* Class Info */}
-          <div className="bg-gray-50 rounded-lg p-4 mb-6">
+          <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-4 mb-6">
             <div className="flex items-center space-x-4 text-sm text-gray-600">
               <div className="flex items-center">
                 <Clock className="w-4 h-4 mr-1" />
@@ -78,6 +78,23 @@ const BookingModal = ({ isOpen, onClose, yogaClass, onBookingComplete }: Booking
             </div>
           </div>
 
+          {/* Call Option */}
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-900 mb-1">Prefer to book by phone?</p>
+                <p className="text-xs text-gray-600">Call for immediate scheduling and questions</p>
+              </div>
+              <a 
+                href="tel:+16087209861" 
+                className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+              >
+                <Phone className="w-4 h-4" />
+                <span>(608) 720-9861</span>
+              </a>
+            </div>
+          </div>
+
           {/* Booking Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
@@ -89,7 +106,7 @@ const BookingModal = ({ isOpen, onClose, yogaClass, onBookingComplete }: Booking
                 id="customerName"
                 name="customerName"
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                 placeholder="Enter your full name"
               />
             </div>
@@ -103,7 +120,7 @@ const BookingModal = ({ isOpen, onClose, yogaClass, onBookingComplete }: Booking
                 id="customerEmail"
                 name="customerEmail"
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                 placeholder="your@email.com"
               />
             </div>
@@ -118,7 +135,7 @@ const BookingModal = ({ isOpen, onClose, yogaClass, onBookingComplete }: Booking
                 name="bookingDate"
                 required
                 min={new Date().toISOString().split('T')[0]}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
               />
             </div>
 
@@ -130,7 +147,7 @@ const BookingModal = ({ isOpen, onClose, yogaClass, onBookingComplete }: Booking
                 type="time"
                 id="bookingTime"
                 name="bookingTime"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
               />
             </div>
 
@@ -142,8 +159,8 @@ const BookingModal = ({ isOpen, onClose, yogaClass, onBookingComplete }: Booking
                 id="notes"
                 name="notes"
                 rows={3}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                placeholder="Any specific requests or questions..."
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none transition-all"
+                placeholder="Any specific requests, experience level, or questions you'd like me to know about..."
               ></textarea>
             </div>
 
@@ -151,22 +168,23 @@ const BookingModal = ({ isOpen, onClose, yogaClass, onBookingComplete }: Booking
               <button
                 type="button"
                 onClick={onClose}
-                className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="flex-1 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50"
+                className="flex-1 px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all disabled:opacity-50 font-medium transform hover:scale-105"
               >
                 {isSubmitting ? 'Booking...' : 'Book Class'}
               </button>
             </div>
           </form>
 
-          <p className="text-xs text-gray-500 mt-4 text-center">
-            Your booking request will be sent to Rebecca. She'll contact you to confirm availability and payment.
+          <p className="text-xs text-gray-500 mt-6 text-center leading-relaxed">
+            Your booking request will be sent to Rebecca. She'll contact you within 24 hours to confirm availability, 
+            discuss your needs, and arrange payment.
           </p>
         </div>
       </div>
