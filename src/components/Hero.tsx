@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChevronDown, Lotus } from 'lucide-react';
+import { ChevronDown, Bot as Lotus } from 'lucide-react';
 
 const Hero = () => {
   return (
