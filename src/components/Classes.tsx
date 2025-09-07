@@ -67,6 +67,23 @@ const Classes = () => {
   }, []);
 
   const loadClasses = async () => {
+    // Check if Supabase is properly configured
+    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
+    const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+    
+    if (supabaseUrl.includes('your-project-url') || 
+        supabaseKey.includes('your-anon-key') || 
+        supabaseUrl.includes('placeholder') || 
+        supabaseKey.includes('placeholder') ||
+        !supabaseUrl.startsWith('https://')) {
+      // Use fallback data immediately when Supabase is not configured
+      console.log('Supabase not configured, using fallback data');
+      setClasses(fallbackClasses);
+      setUsingFallbackData(true);
+      setLoading(false);
+      return;
+    }
+
     try {
       const data = await classesApi.getAllClasses();
       setClasses(data || []);
