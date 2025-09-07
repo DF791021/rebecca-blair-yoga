@@ -6,12 +6,61 @@ import BookingModal from './BookingModal';
 const Classes = () => {
   const [classes, setClasses] = React.useState<YogaClass[]>([]);
   const [loading, setLoading] = React.useState(true);
+  const [usingFallbackData, setUsingFallbackData] = React.useState(false);
   const [selectedClass, setSelectedClass] = React.useState<YogaClass | null>(null);
   const [showBookingModal, setShowBookingModal] = React.useState(false);
   const [bookingStatus, setBookingStatus] = React.useState<{
     type: 'success' | 'error' | null;
     message: string;
   }>({ type: null, message: '' });
+
+  // Fallback classes data when Supabase is not configured
+  const fallbackClasses: YogaClass[] = [
+    {
+      id: 'hatha-yoga',
+      title: 'Hatha Yoga',
+      description: 'A gentle introduction to the most basic yoga postures. Perfect for beginners or those seeking a slower-paced practice focused on breathing and mindful movement.',
+      duration: '60 minutes',
+      level: 'Beginner',
+      price: 25,
+      image_url: 'https://images.pexels.com/photos/3822864/pexels-photo-3822864.jpeg?auto=compress&cs=tinysrgb&w=800',
+      is_active: true,
+      created_at: new Date().toISOString()
+    },
+    {
+      id: 'vinyasa-flow',
+      title: 'Vinyasa Flow',
+      description: 'Dynamic sequences that link breath with movement. Experience flowing transitions between poses in this energizing and creative practice.',
+      duration: '75 minutes',
+      level: 'Intermediate',
+      price: 30,
+      image_url: 'https://images.pexels.com/photos/3822621/pexels-photo-3822621.jpeg?auto=compress&cs=tinysrgb&w=800',
+      is_active: true,
+      created_at: new Date().toISOString()
+    },
+    {
+      id: 'restorative-yoga',
+      title: 'Restorative Yoga',
+      description: 'A deeply relaxing practice using props to support the body in gentle poses. Perfect for stress relief, recovery, and finding inner peace.',
+      duration: '90 minutes',
+      level: 'All Levels',
+      price: 35,
+      image_url: 'https://images.pexels.com/photos/3822688/pexels-photo-3822688.jpeg?auto=compress&cs=tinysrgb&w=800',
+      is_active: true,
+      created_at: new Date().toISOString()
+    },
+    {
+      id: 'power-yoga',
+      title: 'Power Yoga',
+      description: 'An athletic and vigorous form of yoga that builds strength, flexibility, and endurance. Challenge yourself with this dynamic practice.',
+      duration: '60 minutes',
+      level: 'Advanced',
+      price: 32,
+      image_url: 'https://images.pexels.com/photos/3822843/pexels-photo-3822843.jpeg?auto=compress&cs=tinysrgb&w=800',
+      is_active: true,
+      created_at: new Date().toISOString()
+    }
+  ];
 
   React.useEffect(() => {
     loadClasses();
@@ -21,8 +70,12 @@ const Classes = () => {
     try {
       const data = await classesApi.getAllClasses();
       setClasses(data || []);
+      setUsingFallbackData(false);
     } catch (error) {
       console.error('Error loading classes:', error);
+      // Use fallback data when API fails
+      setClasses(fallbackClasses);
+      setUsingFallbackData(true);
     } finally {
       setLoading(false);
     }
@@ -49,6 +102,13 @@ const Classes = () => {
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Discover the perfect class for your journey, from gentle beginnings to dynamic flows
           </p>
+          {usingFallbackData && (
+            <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg max-w-xl mx-auto">
+              <p className="text-yellow-800 text-sm">
+                🔧 Demo mode: Configure Supabase to enable booking functionality
+              </p>
+            </div>
+          )}
         </div>
 
         {bookingStatus.type && (
